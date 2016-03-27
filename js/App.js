@@ -19,7 +19,7 @@ export default class App extends Component {
             .then(response => {
                 return response.json().then(data => {
                     this.state.users = data;
-                    this.setState(this.state);
+                    this.selectUser(data[0]);
                 });
             })
     }
@@ -34,6 +34,11 @@ export default class App extends Component {
 
     search() {
 
+    }
+
+    selectUser(user){
+        this.state.activeUser = user;
+        this.setState(this.state);
     }
 
     render() {
@@ -51,10 +56,10 @@ export default class App extends Component {
                 </div>
                 <div className="row">
                     <div className="col-sm-4 col-md-3 col-lg-2">
-                        <ActiveUser/>
+                        <ActiveUser user={this.state.activeUser}/>
                     </div>
                     <div className="col-sm-8 col-md-9 col-lg-10">
-                        <UserList list={this.state.users}/>
+                        <UserList list={this.state.users} selectUser={this.selectUser.bind(this)}/>
                     </div>
                 </div>
             </div>
