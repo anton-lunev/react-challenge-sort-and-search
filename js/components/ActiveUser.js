@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 export default class ActiveUser extends Component {
     render() {
         if (!this.props.user) {
-            return (<span>Loading...</span>);
+            return (<h2>Nothing found :(</h2>);
         }
 
         return (

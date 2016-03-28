@@ -3,7 +3,7 @@ import UserData from './UserData';
 
 export default class UserList extends Component {
     render() {
-        if (!this.props.list || !this.props.list.length) {
+        if (!this.props.list) {
             return (<span>Loading...</span>)
         }
 

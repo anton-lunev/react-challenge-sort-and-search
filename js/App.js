@@ -9,7 +9,8 @@ export default class App extends Component {
         super(props);
         this.state = {
             searchValue: '',
-            users: []
+            users: [],
+            filteredUsers: null
         };
         this.loadUsers();
     }
@@ -19,6 +20,7 @@ export default class App extends Component {
             .then(response => {
                 return response.json().then(data => {
                     this.state.users = data;
+                    this.state.filteredUsers = data;
                     this.selectUser(data[0]);
                 });
             })
@@ -32,8 +34,12 @@ export default class App extends Component {
 
     }
 
-    search() {
+    search(val) {
+        const regex = new RegExp(val, 'i');
+        this.state.searchValue = val;
+        this.state.filteredUsers = this.state.users.filter(el => regex.test(el.name));
 
+        this.selectUser(this.state.filteredUsers[0])
     }
 
     selectUser(user){
@@ -59,7 +65,7 @@ export default class App extends Component {
                         <ActiveUser user={this.state.activeUser}/>
                     </div>
                     <div className="col-sm-8 col-md-9 col-lg-10">
-                        <UserList list={this.state.users} selectUser={this.selectUser.bind(this)}/>
+                        <UserList list={this.state.filteredUsers} selectUser={this.selectUser.bind(this)}/>
                     </div>
                 </div>
             </div>
