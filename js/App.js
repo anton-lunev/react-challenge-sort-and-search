@@ -10,7 +10,9 @@ export default class App extends Component {
         this.state = {
             searchValue: '',
             users: [],
-            filteredUsers: null
+            filteredUsers: null,
+            sortBy: false,
+            order: false
         };
         this.loadUsers();
     }
@@ -27,11 +29,19 @@ export default class App extends Component {
     }
 
     sortByName() {
-
+        this.state.order = !this.state.order;
+        this.state.filteredUsers = this.state.filteredUsers.sort((a, b) => {
+            return (this.state.order ? 1 : -1) * ((a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0);
+        });
+        this.selectUser(this.state.filteredUsers[0]);
     }
 
     sortByAge() {
-
+        this.state.order = !this.state.order;
+        this.state.filteredUsers = this.state.filteredUsers.sort((a, b) => {
+            return (this.state.order ? 1 : -1) * (a.age - b.age)
+        });
+        this.selectUser(this.state.filteredUsers[0]);
     }
 
     search(val) {
@@ -42,7 +52,7 @@ export default class App extends Component {
         this.selectUser(this.state.filteredUsers[0])
     }
 
-    selectUser(user){
+    selectUser(user) {
         this.state.activeUser = user;
         this.setState(this.state);
     }
@@ -57,7 +67,7 @@ export default class App extends Component {
                 </div>
                 <div className="row">
                     <div className="col-sm-12">
-                        <ToolBar />
+                        <ToolBar sortByName={this.sortByName.bind(this)} sortByAge={this.sortByAge.bind(this)}/>
                     </div>
                 </div>
                 <div className="row">
