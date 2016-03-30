@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 
 export default class UserData extends Component {
-    selectUser() {
+    selectUser = () => {
         this.props.selectUser(this.props.user);
-    }
+    };
 
     render() {
         return (
-            <tr onClick={this.selectUser.bind(this)}>
+            <tr onClick={this.selectUser}>
                 <td>
                     <img src={`images/${this.props.user.image}.svg`} className="user-image"/>
                 </td>

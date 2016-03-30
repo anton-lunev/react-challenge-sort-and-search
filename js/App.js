@@ -28,46 +28,46 @@ export default class App extends Component {
             })
     }
 
-    sortByName() {
+    sortByName = () => {
         this.state.order = !this.state.order;
         this.state.filteredUsers = this.state.filteredUsers.sort((a, b) => {
             return (this.state.order ? 1 : -1) * ((a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0);
         });
         this.selectUser(this.state.filteredUsers[0]);
-    }
+    };
 
-    sortByAge() {
+    sortByAge = () => {
         this.state.order = !this.state.order;
         this.state.filteredUsers = this.state.filteredUsers.sort((a, b) => {
             return (this.state.order ? 1 : -1) * (a.age - b.age)
         });
         this.selectUser(this.state.filteredUsers[0]);
-    }
+    };
 
-    search(val) {
+    search = (val) => {
         const regex = new RegExp(val, 'i');
         this.state.searchValue = val;
         this.state.filteredUsers = this.state.users.filter(el => regex.test(el.name));
 
         this.selectUser(this.state.filteredUsers[0])
-    }
+    };
 
-    selectUser(user) {
+    selectUser = (user) => {
         this.state.activeUser = user;
         this.setState(this.state);
-    }
+    };
 
     render() {
         return (
             <div className="app container-fluid">
                 <div className="row">
                     <div className="col-sm-12">
-                        <SearchBar searchValue={this.state.searchValue} changeValue={this.search.bind(this)}/>
+                        <SearchBar searchValue={this.state.searchValue} changeValue={this.search}/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-sm-12">
-                        <ToolBar sortByName={this.sortByName.bind(this)} sortByAge={this.sortByAge.bind(this)}/>
+                        <ToolBar sortByName={this.sortByName} sortByAge={this.sortByAge}/>
                     </div>
                 </div>
                 <div className="row">
@@ -75,7 +75,7 @@ export default class App extends Component {
                         <ActiveUser user={this.state.activeUser}/>
                     </div>
                     <div className="col-sm-8 col-md-9 col-lg-10">
-                        <UserList list={this.state.filteredUsers} selectUser={this.selectUser.bind(this)}/>
+                        <UserList list={this.state.filteredUsers} selectUser={this.selectUser}/>
                     </div>
                 </div>
             </div>
